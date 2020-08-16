@@ -18,7 +18,7 @@
   </context-param>
   <context-param>
   	<param-name>jdbcPassword</param-name>
-  	<param-value></param-value>
+  	<param-value>root</param-value>
   </context-param>
   
   <error-page>

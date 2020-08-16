@@ -11,7 +11,7 @@
 <jsp:include page="header.jsp"/>
 <hr/>
 	<h2>Admin Login</h2>
-	<form action="admin?action=adminLogin" method="post">
+	<form action="admin?action=login" method="post">
 		<div>
 			<div><label for="loginid">Enter login Id</label> </div>
 			<div><input type="text" id="loginid" name="loginid"> </div>
