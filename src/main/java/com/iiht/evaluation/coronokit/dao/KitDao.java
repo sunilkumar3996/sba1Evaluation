@@ -44,35 +44,5 @@ public class KitDao {
 	}
 
 	// add DAO methods as per requirements
-	public boolean addProductToKit(String name, String description, String cost) throws ClassNotFoundException, SQLException {
-		String sql = "insert into products (name,cost,description) values(?,?,?)";
-		this.connect();
-		
-		PreparedStatement pstmt = this.jdbcConnection.prepareStatement(sql);
-		pstmt.setString(1, name);
-		pstmt.setInt(2, Integer.parseInt(cost));
-		pstmt.setString(3, description);
-		
-		boolean added = pstmt.executeUpdate() > 0;
-		
-		pstmt.close();
-		this.disconnect();
-		return added;
-	}
 	
-	public boolean addUser(String name, String description, String cost) throws ClassNotFoundException, SQLException {
-		String sql = "insert into products (name,cost,description) values(?,?,?)";
-		this.connect();
-		
-		PreparedStatement pstmt = this.jdbcConnection.prepareStatement(sql);
-		pstmt.setString(1, name);
-		pstmt.setInt(2, Integer.parseInt(cost));
-		pstmt.setString(3, description);
-		
-		boolean added = pstmt.executeUpdate() > 0;
-		
-		pstmt.close();
-		this.disconnect();
-		return added;
-	}
 }
