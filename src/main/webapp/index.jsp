@@ -1,35 +1,50 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*" errorPage=""%>
+
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Corona Kit-Home</title>
+<title>Online Shopping</title>
 </head>
 <body>
-<div>
-<jsp:include page="header.jsp"/>
-<hr/>
-	<h2>Admin Login</h2>
-	<form action="admin?action=login" method="post">
-		<div>
-			<div><label for="loginid">Enter login Id</label> </div>
-			<div><input type="text" id="loginid" name="loginid"> </div>
-		</div>
-		<div>
-			<div><label for="password">Enter password</label> </div>
-			<div><input type="text" id="password" name="password"> </div>
-		</div>
-		<div>
-			<div><input type="submit" value="Login"> </div>
-		</div>
-	</form>
+
+<div align="center">
+	<h1>Online Shopping - HOME</h1>
 </div>
-<hr/>
+
+<hr/> 
+<a href="user?action=newuser">New User</a>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 <div>
-	<a href="user?action=newuser"><button>Create Corona Kit</button></a>
+	<%
+		String msg = request.getParameter("msg");
+		if(msg!=null) {
+	%>
+	<label><font color="red"><%=msg%></font></label>
+	<%
+		}
+	%>
 </div>
-<hr/>	
-	<jsp:include page="footer.jsp"/>
+<form action="admin?action=login" method="post">
+	<div align="center">
+		<h3>ADMIN LOGIN</h3>
+		<table>
+			<tr>
+				<td>Username:</td>
+				<td><input type="text" name="username"></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type="password" name="password"></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Login"></td>
+			</tr>
+		</table>
+	</div>
+</form>
 </body>
 </html>

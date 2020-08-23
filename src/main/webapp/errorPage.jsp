@@ -4,17 +4,17 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Corona Kit-Error</title>
+<title>Insert title here</title>
 </head>
 <body>
-<jsp:include page="header.jsp"/>
-<hr/>
-	<div>
+<div>
+
 		<h3>Something went wrong! We regret the inconvenience!</h3>
-		<p>Error Message : <%=exception.getMessage()%> </p>
+
+		<p>Error Message : <%=exception.getMessage()%> %></p>
+
 		<p>Please Contact Administrator</p>
+
 	</div>
-<hr/>	
-	<jsp:include page="footer.jsp"/>
 </body>
 </html>

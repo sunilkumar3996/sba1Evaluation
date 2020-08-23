@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.iiht.evaluation.coronokit.dao.ProductMasterDao;
 import com.iiht.evaluation.coronokit.model.ProductMaster; 
@@ -26,7 +27,9 @@ public class AdminController extends HttpServlet {
 	}
 
 	public void init(ServletConfig config) {
+		System.out.println("**** In Servlet init *******");
 		String jdbcURL = config.getServletContext().getInitParameter("jdbcUrl");
+		System.out.println("**** dbcurl:"+jdbcURL);
 		String jdbcUsername = config.getServletContext().getInitParameter("jdbcUsername");
 		String jdbcPassword = config.getServletContext().getInitParameter("jdbcPassword");
 
@@ -83,41 +86,78 @@ public class AdminController extends HttpServlet {
 
 	private String adminLogout(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		return "";
+		HttpSession session = request.getSession();
+		session.removeAttribute("username");
+		session.invalidate();
+		return "index.jsp";
 	}
 
-	private String listAllProducts(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return "";
+	private String listAllProducts(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
+		// need to retrieve records from DB
+		
+		List<ProductMaster> products = this.productMasterDao.getProductRecords();
+		// put data into request object (to share with view page)
+		request.setAttribute("products", products);
+		return "listproducts.jsp";
 	}
 
-	private String updateProduct(HttpServletRequest request, HttpServletResponse response) {
+	private String updateProduct(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		return "";
+		String id= request.getParameter("id");
+		String name= request.getParameter("name");
+		String cost = request.getParameter("cost");
+		String description = request.getParameter("description");
+		
+		this.productMasterDao.updateProduct(id, name, cost, description);
+		return "admin?action=list";
 	}
 
-	private String showEditProductForm(HttpServletRequest request, HttpServletResponse response) {
+	private String showEditProductForm(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		return "";
+		ProductMaster product = this.productMasterDao.getProductRecord(request.getParameter("id"));
+		// put data into request object (to share with view page)
+		request.setAttribute("product", product);
+		return "editproduct.jsp";
 	}
 
-	private String deleteProduct(HttpServletRequest request, HttpServletResponse response) {
+	private String deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		return "";
+		String id = request.getParameter("id");
+		this.productMasterDao.deleteProduct(id);
+		
+		return "admin?action=list";
 	}
 
-	private String insertProduct(HttpServletRequest request, HttpServletResponse response) {
+	private String insertProduct(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		return "";
+		String name= request.getParameter("pname");
+		String des = request.getParameter("pdesc");
+		String price = request.getParameter("pcost");
+		
+		this.productMasterDao.addNewProduct(name, des, price);
+		
+		return "admin?action=list"; 
 	}
 
 	private String showNewProductForm(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return "";
+		// TODO Auto-generated method stub		
+		return "newproduct.jsp";
 	}
 
-	private String adminLogin(HttpServletRequest request, HttpServletResponse response) {
-		return "";
+	private String adminLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String uname = request.getParameter("username"); 
+ 		String password = request.getParameter("password"); 
+ 		if(uname.equals("admin") && password.equals("admin")) { 
+			// put the data into a container to ship to JSP page 
+ 			// container : session 			 
+			request.getSession().setAttribute("username", uname); 
+			
+			//return "admin?action=list&msg=Welcome "+uname+" <a href=\"admin?action=logout\">Logout</a>";
+			
+			return "admin?action=list&msg=Welcome "+uname;
+		} 
+ 		
+		return "index.jsp?msg=Invalid Credentials";
 	}
 
 	
